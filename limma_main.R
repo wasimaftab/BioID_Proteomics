@@ -55,14 +55,22 @@ myFilePath <- file.choose()
 temp <- unlist(strsplit(myFilePath, "\\", fixed = TRUE))
 proteingroups <-
   as.data.frame(read.table(myFilePath, header = TRUE, sep = "\t"))
-###Kill the code if proteingroups does not contain crap columns#######################################
+###Remove contaminant proteins("+" identified rows) from proteingroups##################################################
 temp <-
   select(
     proteingroups,
     matches("(Reverse|Potential.contaminant|Only.identified.by.site)")
   )
 if (!nrow(temp) * ncol(temp)) {
-  stop("File error, It does not contain crap...enter another file with crap")
+  print("File does not contain columns to determine contaminat proteins. Therefore, assuming all contaminat proteins are aleady removed")
+}else{
+  idx <- NULL
+  for (i in 1:ncol(temp)) {
+    index <- which(unlist(!is.na(match(temp[, i], "+"))))
+    idx <- union(idx, index)
+  }
+  proteingroups <- proteingroups[-idx, ] # removing indexed rows
+  print(paste("Removed", length(idx), "contaminat proteins"))
 }
 ######################################################################################################
 ## Choose if you want to remove outliers before analysis
@@ -80,27 +88,6 @@ if (!length(which(c(0, 1) == flag))) {
 }
 
 if (!flag) {
-  ##Display data to faciliate choice of treatment and control
-  temp <- select(proteingroups, matches("(ibaq|lfq)"))
-  print(names(temp))
-  
-  # #remove "+" identifeid rows from proteingroups##################################################
-  idx <- NULL
-  # temp <- as.matrix(select(proteingroups, matches("(Only.identified.by.site|Reverse|Potential.contaminant)")))
-  temp <-
-    select(
-      proteingroups,
-      matches(
-        "(Only.identified.by.site|Reverse|Potential.contaminant)"
-      )
-    )
-  for (i in 1:ncol(temp)) {
-    index <- which(unlist(!is.na(match(temp[, i], "+"))))
-    idx <- union(idx, index)
-  }
-  proteingroups <- proteingroups[-idx, ] # removing indexed rows
-  # ################################################################################################
-  
   #Extract Uniprot and gene symbols
   Uniprot <- character(length = nrow(proteingroups))
   Symbol <- character(length = nrow(proteingroups))
@@ -117,7 +104,10 @@ if (!flag) {
   proteingroups <- filtered_list$proteingroups
   Symbol <- filtered_list$Symbol
   Uniprot <- filtered_list$Uniprot
-  #Extract required data for Limma
+  
+  ##Display data to faciliate choice of treatment and control
+  temp <- select(proteingroups, matches("(ibaq|lfq)"))
+  print(names(temp))  
   treatment <-
     readline('Enter treatment name(case insensitive) as it appeared in the iBAQ/LFQ column= ')
   control <-
@@ -276,26 +266,7 @@ if (!flag) {
   )
   setwd(cur_dir)
 } else{
-  ## Display data to faciliate choice of treatment and control
-  temp <- select(proteingroups, matches("(ibaq|lfq)"))
-  print(names(temp))
-  
-  ## Remove "+" identifeid rows from proteingroups
-  idx <- NULL
-  temp <-
-    select(
-      proteingroups,
-      matches(
-        "(Only.identified.by.site|Reverse|Potential.contaminant)"
-      )
-    )
-  for (i in 1:ncol(temp)) {
-    index <- which(unlist(!is.na(match(temp[, i], "+"))))
-    idx <- union(idx, index)
-  }
-  proteingroups <- proteingroups[-idx, ] # removing indexed rows
-  
-  #Extract Uniprot and gene symbols
+  ## Extract Uniprot and gene symbols
   Uniprot <- character(length = nrow(proteingroups))
   Symbol <- character(length = nrow(proteingroups))
   for (i in 1:nrow(proteingroups)) {
@@ -311,8 +282,10 @@ if (!flag) {
   proteingroups <- filtered_list$proteingroups
   Symbol <- filtered_list$Symbol
   Uniprot <- filtered_list$Uniprot
-  
-  ## Extract data for Limma
+
+  ## Display data to faciliate choice of treatment and control
+  temp <- select(proteingroups, matches("(ibaq|lfq)"))
+  print(names(temp))
   treatment <-
     readline('Enter treatment name(case insensitive) as it appeared in the iBAQ/LFQ column= ')
   control <-
