@@ -36,12 +36,12 @@
 *	The code will first ask users to specify a log fold change cutoff. Then for every .tsv file in that folder it will print a list of iBAQ/LFQ column names and ask you to enter a bait name from that list. Here assumption is that iBAQ/LFQ columns will contain bait names.
 *	Using those information, it will create a virtual list of bait-prey interactions that are >= cutoff and < pval(0.05).
 *	After that it will print a message if that file is processed successfully.
-*	Finally, when all .tsv files are processed successfully, code will concatenate those virtual lists into a single one, print top 10 rows that list and save it as "Links.xlsx" in the same directory where you copied .tsv files earlier.
+*	Finally, when all .tsv files are processed successfully, code will concatenate those virtual lists into a single one, print top 10 rows that list and save it as "Links.xlsx" in the same directory where you copied .tsv files earlier (See Example/Limma_output/Final_tsvs/Links.xlsx).
 *	Then you can load "Links.xlsx" to visualize a bait-prey interaction network.
-*	Open Cytoscape and click File ? Import ? Network from File. and load "Links.xlsx".
-*	Open Cytoscape and click File ? Import ? Network from File. and load "Links.xlsx".
+*	Open Cytoscape and click File &#8594; Import &#8594; Network from File. and load "Links.xlsx".
+*	Open Cytoscape and click File &#8594; Import &#8594; Network from File. and load "Links.xlsx".
 *	For 'Bait' select Meaning: 'Source Node' and Data type: 'String'. For 'Prey' select Meaning: 'Target Node' and Data type: 'String'. For 'Fold change' select Meaning: 'Edge attribute' and Data type: 'Floating point'. Click 'OK'.
-*	Click Edit ? Remove Self-Loops. to remove self-interactions involving baits.
+*	Click Edit &#8594; Remove Self-Loops. to remove self-interactions involving baits.
 *	The network displayed represents Bait-prey undirected network which can be customized depending on the user preference.
 *	Tested on Windows 10 (64 bit) using Cytoscape 3.7.2.
 
