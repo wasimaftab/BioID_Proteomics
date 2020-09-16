@@ -10,7 +10,8 @@
  |Uniprot | Symbol  |Cbp1_1  |  Cbp1_2  |  Cbp1_3  |  contrl_1 |   contrl_2  |  contrl_3|
  |--------|---------|--------|----------|----------|-----------|-------------|----------|
  |P25554  |SGF29    |0       |     0    |    0     |   2810900 |    4903800  |     0    |
- Proteins that do not participate in two group comparison are saved in the results folder as tsv files with their iBAQ/LFQ intensities.
+ 
+* Proteins that do not participate in two group comparison are saved in the results folder as tsv files with their iBAQ/LFQ intensities.
 * The code is interactive and will help users to provide the correct names as input for bait and control as it appears in the proteingroups file columns. Part of the name (case insensitive) is also accepted. It will also ask users if they want to median normalize their data prior to two-group comparison and if chosen to do so, it will boxplot (in RStudio 'Plots' panel) the data before and after normalization. It will also plot the data distribution (histogram) before and after missing value imputation.           
 * After successful run, it will create a volcano plot in html format and a tsv file containing final data inside a folder called "Results_timestamp" with the current system "timestamp" in the same directory where the limma_main.R file is present. You can find two such sample result folders in Example/Limma_output folder. 
 * You can view the plot in any browser and save it as png by clicking camera icon in plot
