@@ -35,7 +35,7 @@ for (i in 1:length(files)) {
     print(colnames(d)[idx])
     bait_name <- readline('Check the list above and enter a bait name = ')
     nw_tab <- rbind(nw_tab, cbind(rep(bait_name, length(idx_desired)),
-                                  d$gene[idx_desired],
+                                  d$Symbol[idx_desired],
                                   d$logFC[idx_desired]))
     print(paste('Successfully processed', files[i]))
     cat('\n')
@@ -49,9 +49,9 @@ nw_tab$fc <- as.numeric(nw_tab$fc)
 nw_tab$source <- str_to_sentence(nw_tab$source)
 nw_tab$target <- str_to_sentence(nw_tab$target)
 
-print('Network table created whose top 10 rows are as follows:')
+print('Network table created whose top few rows are as follows:')
 cat('\n')
-print(nw_tab[1:10,])
+print(head(nw_tab))
 
 # ## write network table as excel file
 writexl::write_xlsx(nw_tab, path = paste0(tsv_data_dir, '/', 'Links.xlsx'), col_names = TRUE)
