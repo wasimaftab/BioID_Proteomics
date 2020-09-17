@@ -35,15 +35,16 @@ for (i in 1:length(files)) {
     print(colnames(d)[idx])
     bait_name <- readline('Check the list above and enter a bait name = ')
     nw_tab <- rbind(nw_tab, cbind(rep(bait_name, length(idx_desired)),
-                                  d$Symbol[idx_desired],
+                                  as.character(d$Symbol[idx_desired]),
                                   d$logFC[idx_desired]))
     print(paste('Successfully processed', files[i]))
     cat('\n')
 }
 colnames(nw_tab) <- c('source', 'target', 'fc')
-
+# browser()
 ## convert fc column to numeric
-nw_tab$fc <- as.numeric(nw_tab$fc)
+nw_tab$fc <- as.numeric(as.matrix(nw_tab$fc))
+
 
 ## use stringr::str_to_sentence to make first letter capital
 nw_tab$source <- str_to_sentence(nw_tab$source)

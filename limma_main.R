@@ -186,7 +186,7 @@ if (!flag) {
   
   ## Median Normalization Module
   want_normalization <-
-    readinteger("Enter 1, if you want to median normalized data = ")
+    readnumber("Enter 1, if you want to median normalize, otherwise enter any number = ")
   if (want_normalization == 1) {
     boxplot(data_limma[, 1:rep_treats],
             main = paste(treatment, "replicates before normalization"))
@@ -412,7 +412,7 @@ if (!flag) {
   
   ## Median Normalization Module
   want_normalization <-
-    readinteger("Enter 1, if you want to median normalized data = ")
+    readnumber("Enter 1, if you want to median normalize, otherwise enter any number = ")
   if (want_normalization == 1) {
     boxplot(data_limma[, 1:rep_treats],
             main = paste(treatment, "replicates before normalization"))
@@ -504,7 +504,6 @@ if (!flag) {
       col.names = TRUE
     )
   }
-  
   
   ## Write exclusive proteins in treatment
   if (exists('exclusive_treatment')) {

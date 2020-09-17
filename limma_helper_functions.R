@@ -44,6 +44,17 @@ readinteger <- function(str)
   return(n)
 }
 
+readnumber <- function(str)
+{
+  n <- readline(prompt = str)
+  n <- as.integer(n)
+  if (is.na(n)) {
+    print("This variable expects an integer only")
+    n <- readnumber(str)
+  }
+  return(n)
+}
+
 readfloat <- function(str)
 {
   n <- readline(prompt = str)
