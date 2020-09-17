@@ -105,11 +105,11 @@ if (!flag) {
   Symbol <- filtered_list$Symbol
   Uniprot <- filtered_list$Uniprot
   
-  ##Display data to faciliate choice of treatment and control
+  ##Display data to faciliate choice of bait and control
   temp <- select(proteingroups, matches("(ibaq|lfq)"))
   print(names(temp))  
-  treatment <-
-    readline('Enter treatment name(case insensitive) as it appeared in the iBAQ/LFQ column= ')
+  bait <-
+    readline('Enter bait name(case insensitive) as it appeared in the iBAQ/LFQ column= ')
   control <-
     readline('Enter control name(case insensitive) as it appeared in the iBAQ/LFQ column= ')
   ibaq <- readinteger_binary('Enter 1 for iBAQ or 0 for LFQ= ')
@@ -117,12 +117,12 @@ if (!flag) {
   if (ibaq) {
     temp <-
       select(proteingroups, matches(paste('^.*', "ibaq", '.*$', sep = '')))
-    treatment_reps <-
-      data_sanity_check(temp, 'treatment', treatment)
+    bait_reps <-
+      data_sanity_check(temp, 'bait', bait)
     control_reps <- select(temp, matches(control))
     control_reps <- data_sanity_check(temp, 'control', control)
     data <-
-      cbind(treatment_reps,
+      cbind(bait_reps,
             control_reps,
             select(proteingroups, matches("^id$")),
             Uniprot,
@@ -130,13 +130,13 @@ if (!flag) {
   } else {
     temp <-
       select(proteingroups, matches(paste('^.*', "lfq", '.*$', sep = '')))
-    treatment_reps <- select(temp, matches(treatment))
-    treatment_reps <-
-      data_sanity_check(temp, 'treatment', treatment)
+    bait_reps <- select(temp, matches(bait))
+    bait_reps <-
+      data_sanity_check(temp, 'bait', bait)
     control_reps <- select(temp, matches(control))
     control_reps <- data_sanity_check(temp, 'control', control)
     data <-
-      cbind(treatment_reps,
+      cbind(bait_reps,
             control_reps,
             select(proteingroups, matches("^id$")),
             Uniprot,
@@ -146,7 +146,7 @@ if (!flag) {
   #Impute data
   print(names(data))
   rep_treats <-
-    readinteger("Enter the number of treatment replicates=")
+    readinteger("Enter the number of bait replicates=")
   rep_conts <-
     readinteger("Enter the number of control replicates=")
   FC_Cutoff <- readfloat("Enter the log fold change cut off=")
@@ -189,14 +189,14 @@ if (!flag) {
     readnumber("Enter 1, if you want to median normalize, otherwise enter any number = ")
   if (want_normalization == 1) {
     boxplot(data_limma[, 1:rep_treats],
-            main = paste(treatment, "replicates before normalization"))
+            main = paste(bait, "replicates before normalization"))
     boxplot(data_limma[, (rep_treats + 1):(rep_treats + rep_conts)],
             main = paste(control, "replicates before normalization"))
     col_med <- matrixStats::colMedians(data_limma)
     med_mat <- matlab::repmat(col_med, nrow(data_limma), 1)
     data_limma <- data_limma - med_mat
     boxplot(data_limma[, 1:rep_treats],
-            main = paste(treatment, "replicates after normalization"))
+            main = paste(bait, "replicates after normalization"))
     boxplot(data_limma[, (rep_treats + 1):(rep_treats + rep_conts)],
             main = paste(control, "replicates after normalization"))
   }
@@ -283,11 +283,11 @@ if (!flag) {
   Symbol <- filtered_list$Symbol
   Uniprot <- filtered_list$Uniprot
 
-  ## Display data to faciliate choice of treatment and control
+  ## Display data to faciliate choice of bait and control
   temp <- select(proteingroups, matches("(ibaq|lfq)"))
   print(names(temp))
-  treatment <-
-    readline('Enter treatment name(case insensitive) as it appeared in the iBAQ/LFQ column= ')
+  bait <-
+    readline('Enter bait name(case insensitive) as it appeared in the iBAQ/LFQ column= ')
   control <-
     readline('Enter control name(case insensitive) as it appeared in the iBAQ/LFQ column= ')
   ibaq <-
@@ -296,12 +296,12 @@ if (!flag) {
   if (ibaq) {
     temp <-
       select(proteingroups, matches(paste('^.*', "ibaq", '.*$', sep = '')))
-    treatment_reps <-
-      data_sanity_check(temp, 'treatment', treatment)
+    bait_reps <-
+      data_sanity_check(temp, 'bait', bait)
     control_reps <- select(temp, matches(control))
     control_reps <- data_sanity_check(temp, 'control', control)
     data <-
-      cbind(treatment_reps,
+      cbind(bait_reps,
             control_reps,
             select(proteingroups, matches("^id$")),
             Uniprot,
@@ -309,26 +309,26 @@ if (!flag) {
   } else {
     temp <-
       select(proteingroups, matches(paste('^.*', "lfq", '.*$', sep = '')))
-    treatment_reps <- select(temp, matches(treatment))
-    treatment_reps <-
-      data_sanity_check(temp, 'treatment', treatment)
+    bait_reps <- select(temp, matches(bait))
+    bait_reps <-
+      data_sanity_check(temp, 'bait', bait)
     control_reps <- select(temp, matches(control))
     control_reps <- data_sanity_check(temp, 'control', control)
     data <-
-      cbind(treatment_reps,
+      cbind(bait_reps,
             control_reps,
             select(proteingroups, matches("^id$")),
             Uniprot,
             Symbol)
   }
   
-  ## Find out Blank rows, i.e. proteins with all zeros in treatment and in control, see followig example
+  ## Find out Blank rows, i.e. proteins with all zeros in bait and in control, see followig example
   ## iBAQ.Mrpl40_1 iBAQ.Mrpl40_2 iBAQ.Mrpl40_3 iBAQ.Kgd4_1 iBAQ.Kgd4_2 iBAQ.Kgd4_3  id Uniprot Symbol
   ## -------------------------------------------------------------------------------------------------
   ##       0             0             0           0           0           0        84  Q02888  INA17
   print(names(data))
   rep_treats <-
-    readinteger("Enter the number of treatment replicates=")
+    readinteger("Enter the number of bait replicates=")
   rep_conts <-
     readinteger("Enter the number of control replicates=")
   FC_Cutoff <- readfloat("Enter the log fold change cut off=")
@@ -339,7 +339,7 @@ if (!flag) {
     data <- data[-idx,] # removing blank rows
   }
   
-  ## Find out outliers, i.e. proteins with all zeros in treatment and all/some values in control, see followig example
+  ## Find out outliers, i.e. proteins with all zeros in bait and all/some values in control, see followig example
   ## Uniprot  Symbol  treat_1   treat_2   treat_3   contrl_1    contrl_2    contrl_3
   ## -----------------------------------------------------------------------------------
   ## P25554   SGF29	    0	        0	        0        2810900	     0	        0
@@ -358,7 +358,7 @@ if (!flag) {
     data <- data[-idx, ] # removing indexed rows
   }
   
-  ## Find out outliers, i.e. proteins with all zeros in control and all/some values in treatment, see followig example
+  ## Find out outliers, i.e. proteins with all zeros in control and all/some values in bait, see followig example
   ## iBAQ.Mrpl40_1 iBAQ.Mrpl40_2 iBAQ.Mrpl40_3 iBAQ.Kgd4_1 iBAQ.Kgd4_2 iBAQ.Kgd4_3  id   Uniprot   Symbol
   ## -----------------------------------------------------------------------------------------------------
   ##     662810        505600        559130        0           0           0        79   P38845    CRP1
@@ -369,11 +369,11 @@ if (!flag) {
   
   idx <- which(temp == 0)
   if (length(idx)) {
-    exclusive_treatment <- data[idx,]
-    filename_exclusive_treatment <-
+    exclusive_bait <- data[idx,]
+    filename_exclusive_bait <-
       paste(format(Sys.time(), "%Y%m%d_%H%M%S"),
             "_exclusive_proteins_",
-            treatment,
+            bait,
             sep = "")
     data <- data[-idx, ] # removing indexed rows
   }
@@ -415,14 +415,14 @@ if (!flag) {
     readnumber("Enter 1, if you want to median normalize, otherwise enter any number = ")
   if (want_normalization == 1) {
     boxplot(data_limma[, 1:rep_treats],
-            main = paste(treatment, "replicates before normalization"))
+            main = paste(bait, "replicates before normalization"))
     boxplot(data_limma[, (rep_treats + 1):(rep_treats + rep_conts)],
             main = paste(control, "replicates before normalization"))
     col_med <- matrixStats::colMedians(data_limma)
     med_mat <- matlab::repmat(col_med, nrow(data_limma), 1)
     data_limma <- data_limma - med_mat
     boxplot(data_limma[, 1:rep_treats],
-            main = paste(treatment, "replicates after normalization"))
+            main = paste(bait, "replicates after normalization"))
     boxplot(data_limma[, (rep_treats + 1):(rep_treats + rep_conts)],
             main = paste(control, "replicates after normalization"))
   }
@@ -505,11 +505,11 @@ if (!flag) {
     )
   }
   
-  ## Write exclusive proteins in treatment
-  if (exists('exclusive_treatment')) {
+  ## Write exclusive proteins in bait
+  if (exists('exclusive_bait')) {
     write.table(
-      exclusive_treatment,
-      paste(filename_exclusive_treatment, '.tsv', sep = ''),
+      exclusive_bait,
+      paste(filename_exclusive_bait, '.tsv', sep = ''),
       sep = '\t',
       row.names = FALSE,
       col.names = TRUE
