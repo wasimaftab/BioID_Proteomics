@@ -204,7 +204,7 @@ display_plotly_figs <-
         mode = "markers",
         color = ~ categ_Mod,
         colors = c('#0C4B8E', '#BF382A'),
-        size = ~ abs(logFC),
+        # size = ~ abs(logFC),
         hoverinfo = 'text',
         showlegend = FALSE,
         text = ~ paste(

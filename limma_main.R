@@ -170,7 +170,17 @@ if (!flag) {
     ylab = "Frequency",
     main =  "All data: before imputation"
   )
-  # browser()
+  
+  #### Boxplot bait replicates before normalization #######
+  boxplot(data_limma[,(rep_treats + 1):(rep_treats + rep_conts)], 
+          na.rm=TRUE, 
+          main=paste(control, 'replicates before normalization'))
+  
+  #### Boxplot bait replicates before normalization #######
+  boxplot(data_limma[,1:rep_treats], 
+          na.rm=TRUE, 
+          main=paste(bait, 'replicates before normalization'))
+
   fit <- fitdistr(c(na.exclude(data_limma)), "normal")
   mu <- as.double(fit$estimate[1])
   sigma <- as.double(fit$estimate[2])
@@ -377,13 +387,11 @@ if (!flag) {
             sep = "")
     data <- data[-idx, ] # removing indexed rows
   }
-  
   ## Impute missing values
   data_limma <-
     log2(apply(data[c(1:(rep_treats + rep_conts))], 2, as.numeric))
   data_limma[is.infinite(data_limma)] <- NA
   nan_idx <- which(is.na(data_limma))
-  # browser()
   temp <-
     reshape(data_limma, nrow(data_limma) * ncol(data_limma), 1)
   hist(
@@ -393,7 +401,16 @@ if (!flag) {
     ylab = "Frequency",
     main =  "All data: before imputation (nan ignored)"
   )
-  # browser()
+  #### Boxplot bait replicates before normalization #######
+  boxplot(data_limma[,(rep_treats + 1):(rep_treats + rep_conts)], 
+          na.rm=TRUE, 
+          main=paste(control, 'replicates before normalization'))
+  
+  #### Boxplot bait replicates before normalization #######
+  boxplot(data_limma[,1:rep_treats], 
+          na.rm=TRUE, 
+          main=paste(bait, 'replicates before normalization'))
+
   fit <- fitdistr(c(na.exclude(data_limma)), "normal")
   mu <- as.double(fit$estimate[1])
   sigma <- as.double(fit$estimate[2])
