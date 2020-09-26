@@ -1,4 +1,4 @@
-# This is a pipeline to analyze proteiomic data for the protocol paper "Mapping proximity networks in yeast mitochondria using BioID coupled to proteomics"
+# Pipeline to analyze proteomic dataset for the protocol paper "Mapping proximity networks in yeast mitochondria using BioID coupled to proteomics"
 
 ### How to run two-group comparison(using LIMMA) code?
 * Implementation of LIMMA (Linear Models for Microarray Data), an empirical Bayes method for two group comparision in a proteomic experiment [1].
