@@ -4,7 +4,7 @@
 * Implementation of LIMMA (Linear Models for Microarray Data), an empirical Bayes method for two group comparision in a proteomic experiment [1].
 * The pipeline is implemented in R programming language and needed libraries are installed automatically.
 * Make sure you have mitochondrial proteins (identified with uniprot id) in your proteingroups otherwise code will terminate with a message. See Mitochondrial_Proteins folder for a list of experimentally determined mitochondrial proteins.
-* Run the limma_main.R code and select a MaxQuant outputted proteingroups.txt file with either iBAQ/LFQ values (see  Example/MQ_output/proteinGroups_example.txt). limma_helper_functions.R, the file containing the helper functions must be in the same directory as the limma_main.R.
+* Run the limma_main.R code by clicking **Source** in RStudio and select a MaxQuant outputted proteingroups.txt file with either iBAQ/LFQ values (see  Example/MQ_output/proteinGroups_example.txt). limma_helper_functions.R, the file containing the helper functions must be in the same directory as the limma_main.R.
 * There are two modes: either use full data or remove exclusive proteins before analysis. Proteins that have zero intensities in all the replicates of one group are defined as exclusive proteins. For example  a set of three 'exclusively enriched' proteins in bait 'Cbp1' is defined as follows
 
  |Uniprot | Symbol  |Cbp1_1  |  Cbp1_2  |  Cbp1_3  |  contrl_1 |   contrl_2  |  contrl_3|
