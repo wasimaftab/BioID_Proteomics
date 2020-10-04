@@ -23,7 +23,8 @@ list.of.packages <-
     "plotly",
     "htmlwidgets",
     "rstudioapi",
-    "webshot"
+    "webshot",
+    "matrixStats"
   )
 new.packages <-
   list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
