@@ -56,6 +56,7 @@ myFilePath <- file.choose()
 temp <- unlist(strsplit(myFilePath, "\\", fixed = TRUE))
 proteingroups <-
   as.data.frame(read.table(myFilePath, header = TRUE, sep = "\t"))
+# browser()
 ###Remove contaminant proteins("+" identified rows) from proteingroups##################################################
 temp <-
   select(
@@ -105,6 +106,17 @@ if (!flag) {
   proteingroups <- filtered_list$proteingroups
   Symbol <- filtered_list$Symbol
   Uniprot <- filtered_list$Uniprot
+  
+  ## Remove proteins with Sequence coverage [%] < 5 [%] and Unique peptides <= 1
+  temp <-
+    select(proteingroups,
+           matches("(^Sequence.coverage(.){4}$|^Unique.peptides$)"))
+  # ridx <- union(which(temp[, 1] == 1), which(temp[, 2] < 5))
+  ridx <- union(which(temp[, 1] <= 1), which(temp[, 2] < 5))
+  proteingroups <-
+    proteingroups[-ridx ,] # removing indexed rows
+  Symbol <- Symbol[-ridx]
+  Uniprot <- Uniprot[-ridx]
   
   ##Display data to faciliate choice of bait and control
   temp <- select(proteingroups, matches("(ibaq|lfq)"))
@@ -247,11 +259,12 @@ if (!flag) {
     )
   
   ##Save the data file
+  didx <- grep('iBAQ', colnames(data))
   final_data <-
     cbind(select(data, matches("^id$")),
           Uniprot,
           Symbol,
-          data_limma,
+          data[,didx],
           dat)
   final_data <- select(final_data, -matches("^gene$"))
   filename_final_data <-
@@ -284,15 +297,28 @@ if (!flag) {
     temp <- as.character(proteingroups$Fasta.headers[i])
     splits <- unlist(strsplit(temp, '\\|'))
     Uniprot[i] <- splits[2]
+    
     splits <- unlist(str_match(splits[3], "GN=(.*?) PE="))
     Symbol[i] <- splits[2]
   }
-  
+  # browser()
   ## Extract and work only on Mitochondrial proteins
   filtered_list <- get_mito_protein(proteingroups, Symbol, Uniprot)
   proteingroups <- filtered_list$proteingroups
   Symbol <- filtered_list$Symbol
   Uniprot <- filtered_list$Uniprot
+  
+  ## Remove proteins with Sequence coverage [%] < 5 [%] and Unique peptides <= 1
+  temp <-
+    select(proteingroups,
+           matches("(^Sequence.coverage(.){4}$|^Unique.peptides$)"))
+  # ridx <- union(which(temp[, 1] == 1), which(temp[, 2] < 5))
+  ridx <- union(which(temp[, 1] <= 1), which(temp[, 2] < 5))
+  proteingroups <-
+    proteingroups[-ridx ,] # removing indexed rows
+  Symbol <- Symbol[-ridx]
+  Uniprot <- Uniprot[-ridx]
+  # browser()
 
   ## Display data to faciliate choice of bait and control
   temp <- select(proteingroups, matches("(ibaq|lfq)"))
@@ -388,6 +414,7 @@ if (!flag) {
             sep = "")
     data <- data[-idx, ] # removing indexed rows
   }
+  
   ## Impute missing values
   data_limma <-
     log2(apply(data[c(1:(rep_treats + rep_conts))], 2, as.numeric))
@@ -479,12 +506,14 @@ if (!flag) {
       NegLogPvalMod = (-log10(res.eb$p.mod)),
       NegLogPvalOrd = (-log10(res.eb$p.ord))
     )
+  # browser()
   ##Save the data file
+  didx <- grep('iBAQ', colnames(data))
   final_data <-
     cbind(select(data, matches("^id$")),
           Uniprot,
           Symbol,
-          data_limma,
+          data[,didx],
           dat)
   final_data <- select(final_data, -matches("^gene$"))
   filename_final_data <-
