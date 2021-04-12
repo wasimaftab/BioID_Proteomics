@@ -1,4 +1,4 @@
-# Pipeline to analyze proteomic dataset for the protocol paper "Mapping proximity networks in yeast mitochondria using BioID coupled to proteomics"
+# Pipeline to analyze proteomic dataset for the protocol paper "Mapping proximity networks in yeast mitochondria using BioID coupled to proteomics (DOI: 10.1016/j.xpro.2020.100219)"
 
 ### How to run two-group comparison(using LIMMA) code?
 * Implementation of LIMMA (Linear Models for Microarray Data), an empirical Bayes method for two group comparision in a proteomic experiment [1].
@@ -46,7 +46,8 @@
 *	The network displayed represents Bait-prey undirected network which can be customized depending on the user preference.
 *	Tested on Windows 10 (64 bit) using Cytoscape 3.7.2.
 
-
+### Cite this repo
+Salvatori, R., Aftab, W., Forne, I., Imhof, A., Ott, M. and Singh, A.P., 2020. Mapping protein networks in yeast mitochondria using proximity-dependent biotin identification coupled to proteomics. STAR protocols, p.100219.
 
 #### Reference:
 [1] Kammers, Kai, et al. "Detecting significant changes in protein abundance." EuPA open proteomics 7 (2015): 11-19.
