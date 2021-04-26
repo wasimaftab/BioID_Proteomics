@@ -47,7 +47,7 @@
 *	Tested on Windows 10 (64 bit) using Cytoscape 3.7.2.
 
 ### Cite this repo
-Salvatori, R., Aftab, W., Forne, I., Imhof, A., Ott, M. and Singh, A.P., 2020. Mapping protein networks in yeast mitochondria using proximity-dependent biotin identification coupled to proteomics. STAR protocols, p.100219.
+Salvatori, R., Aftab, W., Forne, I., Imhof, A., Ott, M. and Singh, A.P., 2020. Mapping protein networks in yeast mitochondria using proximity-dependent biotin identification coupled to proteomics. [STAR protocols](https://star-protocols.cell.com/protocols/327), p.100219.
 
 #### Reference:
 [1] Kammers, Kai, et al. "Detecting significant changes in protein abundance." EuPA open proteomics 7 (2015): 11-19.
